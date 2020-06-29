@@ -1,8 +1,8 @@
 <template>
     <div class="full_wrap">
         <Header></Header>
+        <Create></Create>
         <List></List>
-        {{hi}}
     </div>
 </template>
 
@@ -11,11 +11,13 @@
   import {Component} from 'vue-property-decorator'
   import List from '~/components/List'
   import Header from '~/components/Header'
+  import Create from '~/components/Create'
 
   @Component({
     components: {
         List,
-        Header
+        Header,
+        Create
     } 
   })
   export default class Index extends Vue{
