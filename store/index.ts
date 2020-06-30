@@ -1,4 +1,6 @@
 import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
+import AxiosService from '@/service/axios.service';
+import AxiosResponse from '@/service/axios.service';
 
 interface ItemList {
     id: number;
@@ -10,12 +12,7 @@ interface ItemList {
 @Module
 export default class Store extends VuexModule{
     
-    itemList : ItemList[] = [
-        { id: 1, content: '씻기', status: 'clear' },
-        { id: 2, content: '준비하기', status: 'clear' },
-        { id: 3, content: '학교가기', status: 'clear' },
-        { id: 4, content: '게임하기', status: 'yet' },
-    ]
+    itemList : ItemList[] = []
 
     //아이템 추가 Mutation
     @Mutation
@@ -43,6 +40,17 @@ export default class Store extends VuexModule{
         }
     }
 
+    @Mutation
+    setItem(itemList: ItemList[]){
+        this.itemList = itemList;
+    }
+
+    @Action
+    async getItem(){
+        const response: AxiosResponse = await AxiosService.instance.get('/data.json');
+        console.log(response);
+        this.context.commit('setItem', response.data.itemList);
+    }
     get setYet(){
         return this.itemList.filter((item: ItemList) => item.status === 'yet')
     }

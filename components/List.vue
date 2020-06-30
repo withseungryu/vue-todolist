@@ -27,6 +27,7 @@
         itemList : ItemList[] = [];
 
         created(){
+            this.$store.dispatch('getItem');
             this.itemList = this.$store.state.itemList;
         }
         initItem(){
