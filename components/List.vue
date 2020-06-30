@@ -9,13 +9,12 @@
                 <button class="btn btn-default" type="button" v-on:click="removeItem(item.id)">X</button>
             </span>
         </div>
-        {{itemList}}
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue'
-    import {Component} from 'vue-property-decorator'
+    import {Component, Watch} from 'vue-property-decorator'
 
     interface ItemList{
         id : number;
@@ -40,9 +39,24 @@
   
         }
         changeStatus(item: ItemList){
+            console.log(this.$route.params.status);
             this.$store.commit('changeStatus', item );
             this.initItem()
         }
+
+        @Watch("$route.params.status")
+        routeUpdate(newValue: string){           
+            if(!newValue){
+                this.itemList = this.$store.state.itemList;
+            }else if(newValue === 'yet'){
+                this.itemList = this.$store.getters.setYet;
+            }else{
+                this.itemList = this.$store.getters.setClear;
+            }
+        
+        }
+
+
 
 
     }

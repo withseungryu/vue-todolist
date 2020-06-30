@@ -43,5 +43,12 @@ export default class Store extends VuexModule{
         }
     }
 
+    get setYet(){
+        return this.itemList.filter((item: ItemList) => item.status === 'yet')
+    }
+    get setClear(){
+        return this.itemList.filter((item: ItemList) => item.status === 'clear' )
+    }
+
 
 }
